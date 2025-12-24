@@ -11,7 +11,7 @@ import unittest
 
 # Python 3.12+ is required for interpreters module
 if sys.version_info >= (3, 12):
-    from concurrent import interpreters
+    from concurrent import interpreters  # type: ignore[attr-defined]
 
 
 @unittest.skipIf(
