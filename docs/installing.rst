@@ -1,0 +1,130 @@
+.. _installing:
+
+==========
+Installing
+==========
+
+This package is uploaded to PyPI at https://pypi.python.org/pypi/zstandard.
+So, to install this package::
+
+   $ pip install zstandard
+
+Binary wheels are made available for some platforms. If you need to
+install from a source distribution, all you should need is a working C
+compiler and the Python development headers/libraries. On many Linux
+distributions, you can install a ``python-dev`` or ``python-devel``
+package to provide these dependencies.
+
+Packages are also uploaded to Anaconda Cloud at
+https://anaconda.org/indygreg/zstandard. See that URL for how to install
+this package with ``conda``.
+
+Requirements
+============
+
+This package is designed to run with Python 3.9, 3.10, 3.11, and 3.12
+on common platforms (Linux, Windows, and OS X). On PyPy (both PyPy2 and PyPy3)
+we support version 6.0.0 and above. x86 and x86_64 are well-tested on Windows.
+Only x86_64 is well-tested on Linux and macOS.
+
+CFFI Backend
+============
+
+In order to build/run the CFFI backend/bindings (as opposed to the C/Rust
+backend/bindings), you will need the ``cffi`` package installed. The
+``cffi`` package is listed as an optional dependency in ``setup.py`` and
+may not get picked up by your packaging tools.
+
+If you wish to use the CFFI backend (or have to use it since your Python
+distribution doesn't support compiled extensions using the Python C API -
+this is the case for PyPy for example), be sure you have the ``cffi``
+package installed.
+
+One way to do this is to depend on the ``zstandard[cffi]`` dependency.
+e.g. ``pip install 'zstandard[cffi]'`` or add ``zstandard[cffi]`` to your
+pip requirements file.
+
+Legacy Format Support
+=====================
+
+To enable legacy zstd format support which is needed to handle files compressed
+with zstd < 1.0 you need to provide an installation option::
+
+   $ pip install zstandard --config-settings='--global-option=--legacy'
+
+All Install Arguments
+=====================
+
+``setup.py`` accepts the following arguments for influencing behavior:
+
+``--legacy``
+   Enable legacy zstd format support in order to read files produced with
+   zstd < 1.0.
+
+``--system-zstd``
+   Attempt to link against the zstd library present on the system instead
+   of the version distributed with the extension.
+
+``--warning-as-errors``
+   Treat all compiler warnings as errors.
+
+``--no-c-backend``
+   Do not compile the C-based backend.
+
+``--no-cffi-backend``
+   Do not compile the CFFI-based backend.
+
+``--rust-backend``
+   Compile the Rust backend (not yet feature complete).
+
+Packaging tools newer than ~2023 likely require using a PEP 517
+build backend instead of invoking ``setup.py`` directly. In order to send
+custom arguments to our ``setup.py``, you need to use ``--config-settings``.
+e.g. ``python3 -m pip install zstandard --config-settings='--global-option=--no-cffi-backend'``.
+
+Older packaging tools allowed you to use e.g.
+``python3 -m pip install zstandard --install-option --no-cffi-backend`` or
+just ``python3 setup.py --no-cffi-backend`` directly.
+
+In addition, the following environment variables are recognized:
+
+``ZSTD_EXTRA_COMPILER_ARGS``
+   Extra compiler arguments to compile the C backend with.
+
+``ZSTD_WARNINGS_AS_ERRORS``
+   Equivalent to ``setup.py --warnings-as-errors``.
+
+Building Against External libzstd
+=================================
+
+By default, this package builds and links against a single file ``libzstd``
+bundled as part of the package distribution. This copy of ``libzstd`` is
+statically linked into the extension.
+
+It is possible to point ``setup.py`` at an external (typically system provided)
+``libzstd``. To do this, simply pass ``--system-zstd`` to ``setup.py``. e.g.
+
+``python3.9 setup.py --system-zstd`` or ``python3.9 -m pip install zstandard
+--install-option="--system-zstd"``.
+
+When building against a system libzstd, you may need to specify extra compiler
+arguments to help Python's build system find the external library. These can
+be specified via the ``ZSTD_EXTRA_COMPILER_ARGS`` environment variable. e.g.
+``ZSTD_EXTRA_COMPILER_ARGS="-I/usr/local/include" python3.9 setup.py
+--system-zstd``.
+
+``hyperlight-zstandard`` can be sensitive about what version of ``libzstd`` it links
+against. For best results, point this package at the exact same version of
+``libzstd`` that it bundles. See the bundled ``zstd/zstd.h`` or
+``zstd/zstd.c`` for which version that is.
+
+A build or run-time error can occur if the version of ``libzstd`` being built
+against does not exactly match our bundled version. Historically, we required
+an exact version match. But in September 2025 we relaxed this constraint to
+only require a minimum version match.
+
+When linking against an external ``libzstd``, not all package features may be
+available. Notably, the ``multi_compress_to_buffer()`` and
+``multi_decompress_to_buffer()`` APIs are not available, as these rely on private
+symbols in the ``libzstd`` C source code, which require building against private
+header files to use.

@@ -1,0 +1,89 @@
+hyperlight-zstandard (0.25.0) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Sun, 14 Sep 2025 12:00:00 -0700
+
+hyperlight-zstandard (0.24.0) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Sun, 17 Aug 2025 10:00:00 -0700
+
+hyperlight-zstandard (0.23.0) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Sun, 14 Jul 2024 12:15:00 -0700
+
+hyperlight-zstandard (0.22.0) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Mon, 16 Apr 2023 18:00:00 -0700
+
+hyperlight-zstandard (0.21.0) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Mon, 16 Apr 2023 18:00:00 -0700
+
+hyperlight-zstandard (0.20.0) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Mon, 20 Feb 2023 13:00:00 -0700
+
+hyperlight-zstandard (0.19.0) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Sat, 29 Oct 2022 18:05:00 -0700
+
+hyperlight-zstandard (0.18.0) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Tue, 18 Jan 2022 18:05:00 -0800
+
+hyperlight-zstandard (0.17.0) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Tue, 18 Jan 2022 18:00:00 -0800
+
+hyperlight-zstandard (0.16.0) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Sat, 16 Oct 2021 12:25:00 -0700
+
+hyperlight-zstandard (0.15.0~dev0-1) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Sat, 13 Jun 2020 12:25:00 -0700
+
+hyperlight-zstandard (0.14.0) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Sat, 13 Jun 2020 12:15:00 -0700
+
+hyperlight-zstandard (0.14.0~dev0-1) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Sat, 28 Dec 2019 10:00:00 -0800
+
+hyperlight-zstandard (0.13.0~dev0-1) unstable; urgency=low
+
+  * New version.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Sat, 20 Apr 2019 12:50:58 -0700
+
+hyperlight-zstandard (0.9.1-1) unstable; urgency=low
+
+  * Initial Debian packaging definition.
+
+ -- Gregory Szorc <gregory.szorc@gmail.com>  Mon, 04 Jun 2018 17:35:23 -0700

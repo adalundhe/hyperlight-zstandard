@@ -1,0 +1,14 @@
+*.pyd
+*.o
+*.so
+*.orig
+*.pyc
+.hypothesis/
+.tox
+build/
+docs/_build/
+dist/
+target/
+venv/
+venv3/
+zstandard.egg-info/
