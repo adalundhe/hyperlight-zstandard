@@ -104,7 +104,7 @@ statically linked into the extension.
 It is possible to point ``setup.py`` at an external (typically system provided)
 ``libzstd``. To do this, simply pass ``--system-zstd`` to ``setup.py``. e.g.
 
-``python3.9 setup.py --system-zstd`` or ``python3.9 -m pip install zstandard
+``python3.14 setup.py --system-zstd`` or ``python3.14 -m pip install zstandard
 --install-option="--system-zstd"``.
 
 When building against a system libzstd, you may need to specify extra compiler

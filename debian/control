@@ -9,8 +9,8 @@ Build-Depends:
   python3-hypothesis,
   python3-pytest,
   python3-setuptools
-Standards-Version: 3.9.1
-X-Python3-Version: >= 3.9
+Standards-Version: 3.12.0
+X-Python3-Version: >= 3.12
 Homepage: https://github.com/adalundhe/hyperlight-zstandard
 Vcs-Browser: https://github.com/adalundhe/hyperlight-zstandard.git
 Vcs-Git: https://github.com/adalundhe/hyperlight-zstandard.git

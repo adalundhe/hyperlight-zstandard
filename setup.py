@@ -16,7 +16,7 @@ from packaging.version import Version
 from setuptools import setup
 
 if sys.version_info[0:2] < (3, 9):
-    print("Python 3.9+ is required", file=sys.stderr)
+    print("Python 3.12+ is required", file=sys.stderr)
     sys.exit(1)
 
 # Need change in 1.10 for ffi.from_buffer() to handle all buffer types

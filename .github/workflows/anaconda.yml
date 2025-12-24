@@ -10,11 +10,9 @@ jobs:
       fail-fast: false
       matrix:
         py:
-          - '3.9'
-          - '3.10'
-          - '3.11'
           - '3.12'
           - '3.13'
+          - '3.14'
     runs-on: 'ubuntu-22.04'
     env:
       # Enable fuzzing tests, other expensive tests.
@@ -60,11 +58,9 @@ jobs:
       fail-fast: false
       matrix:
         py:
-          - '3.9'
-          - '3.10'
-          - '3.11'
           - '3.12'
           - '3.13'
+          - '3.14'
     runs-on: 'windows-2022'
     env:
       # Enable fuzzing tests, other expensive tests.
