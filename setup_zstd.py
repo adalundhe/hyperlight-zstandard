@@ -4,16 +4,16 @@
 # This software may be modified and distributed under the terms
 # of the BSD license. See the LICENSE file for details.
 
-import distutils.ccompiler
-import distutils.command.build_ext
-import distutils.extension
-import distutils.util
 import glob
 import os
 import shutil
 import subprocess
 import sys
 
+import distutils.ccompiler
+import distutils.command.build_ext
+import distutils.extension
+import distutils.util
 import packaging.tags
 
 ext_includes = [

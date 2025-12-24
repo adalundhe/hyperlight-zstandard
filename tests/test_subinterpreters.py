@@ -14,7 +14,9 @@ if sys.version_info >= (3, 12):
     from concurrent import interpreters
 
 
-@unittest.skipIf(sys.version_info < (3, 12), "Subinterpreters require Python 3.12+")
+@unittest.skipIf(
+    sys.version_info < (3, 12), "Subinterpreters require Python 3.12+"
+)
 class TestSubinterpreters(unittest.TestCase):
     """Test zstandard in subinterpreter contexts."""
 
@@ -142,10 +144,10 @@ except zstandard.ZstdError:
     def test_concurrent_subinterpreters(self):
         """Test zstandard in concurrent subinterpreters."""
         import threading
-        
+
         results = []
         errors = []
-        
+
         def run_in_subinterpreter(interp_id):
             try:
                 interp = interpreters.create()
@@ -168,16 +170,16 @@ assert decompressed == data
                     interp.close()
             except Exception as e:
                 errors.append((interp_id, str(e)))
-        
+
         threads = []
         for i in range(10):
             t = threading.Thread(target=run_in_subinterpreter, args=(i,))
             threads.append(t)
             t.start()
-        
+
         for t in threads:
             t.join()
-        
+
         self.assertEqual(len(errors), 0, f"Errors occurred: {errors}")
         self.assertEqual(len(results), 10)
 
@@ -211,4 +213,3 @@ assert decompressed == test_data
 
 if __name__ == "__main__":
     unittest.main()
-
