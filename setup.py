@@ -8,25 +8,13 @@
 from __future__ import print_function
 
 import os
-import platform
 import sys
-import sysconfig
 
-from packaging.version import Version
 from setuptools import setup
 
-if sys.version_info[0:2] < (3, 9):
+if sys.version_info[0:2] < (3, 12):
     print("Python 3.12+ is required", file=sys.stderr)
     sys.exit(1)
-
-# Need change in 1.10 for ffi.from_buffer() to handle all buffer types
-# (like memoryview).
-# Need feature in 1.11 for ffi.gc() to declare size of objects so we avoid
-# garbage collection pitfalls.
-# Require 1.17 everywhere so we don't have to think about supporting older
-# versions.
-# Require 2.0 for Python 3.14+ to add improved free-threading support
-MINIMUM_CFFI_VERSION = "2.0" if sys.version_info[0:2] >= (3, 14) else "1.17"
 
 ext_suffix = os.environ.get("SETUPTOOLS_EXT_SUFFIX")
 if ext_suffix:
@@ -46,26 +34,9 @@ if ext_suffix:
         try:
             import setuptools._distutils.py39compat as py39compat
         except ImportError:
-            pass
+            py39compat = None
     if py39compat:
         py39compat.add_ext_suffix = lambda vars: None
-
-try:
-    import cffi
-
-    # PyPy (and possibly other distros) have CFFI distributed as part of
-    # them.
-    cffi_version = Version(Version(cffi.__version__).base_version)
-    if cffi_version < Version(MINIMUM_CFFI_VERSION):
-        print(
-            "CFFI %s or newer required (%s found); "
-            "not building CFFI backend" % (MINIMUM_CFFI_VERSION, cffi_version),
-            file=sys.stderr,
-        )
-        cffi = None
-
-except ImportError:
-    cffi = None
 
 sys.path.insert(0, ".")
 
@@ -75,25 +46,10 @@ SUPPORT_LEGACY = False
 SYSTEM_ZSTD = False
 WARNINGS_AS_ERRORS = False
 C_BACKEND = True
-CFFI_BACKEND = True
 RUST_BACKEND = False
 
 if os.environ.get("ZSTD_WARNINGS_AS_ERRORS", ""):
     WARNINGS_AS_ERRORS = True
-
-# PyPy doesn't support the C backend.
-if platform.python_implementation() == "PyPy":
-    C_BACKEND = False
-
-# cffi 2.0 only introduced no-GIL support for 3.14+.
-if sys.version_info[0:2] < (3, 14) and sysconfig.get_config_var(
-    "Py_GIL_DISABLED"
-):
-    print(
-        "cffi backend requires 3.14+ for nogil Python; disabling cffi",
-        file=sys.stderr,
-    )
-    CFFI_BACKEND = False
 
 if "--legacy" in sys.argv:
     SUPPORT_LEGACY = True
@@ -110,10 +66,6 @@ if "--warnings-as-errors" in sys.argv:
 if "--no-c-backend" in sys.argv:
     C_BACKEND = False
     sys.argv.remove("--no-c-backend")
-
-if "--no-cffi-backend" in sys.argv:
-    CFFI_BACKEND = False
-    sys.argv.remove("--no-cffi-backend")
 
 if "--rust-backend" in sys.argv:
     RUST_BACKEND = True
@@ -134,11 +86,6 @@ if C_BACKEND:
 
 if RUST_BACKEND:
     extensions.append(setup_zstd.get_rust_extension())
-
-if CFFI_BACKEND and cffi:
-    import make_cffi
-
-    extensions.append(make_cffi.ffi.distutils_extension())
 
 version = None
 

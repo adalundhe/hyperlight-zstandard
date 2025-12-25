@@ -18,7 +18,6 @@ class TestModuleAttributes(unittest.TestCase):
                 "multi_compress_to_buffer",
                 "multi_decompress_to_buffer",
             },
-            "cffi": set(),
             "rust": {
                 "buffer_types",
                 "multi_compress_to_buffer",

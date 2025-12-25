@@ -76,7 +76,6 @@ def bench(
     threads_arg=False,
     chunks_as_buffer=False,
     decompressed_sizes_arg=False,
-    cffi=True,
 ):
     def wrapper(fn):
         if not fn.__name__.startswith(("compress_", "decompress_")):
@@ -92,7 +91,6 @@ def bench(
         fn.threads_arg = threads_arg
         fn.chunks_as_buffer = chunks_as_buffer
         fn.decompressed_sizes_arg = decompressed_sizes_arg
-        fn.cffi = cffi
 
         BENCHES.append(fn)
 
@@ -121,7 +119,6 @@ def compress_reuse(chunks, zparams):
     simple=True,
     threads_arg=True,
     chunks_as_buffer=True,
-    cffi=False,
 )
 def compress_multi_compress_to_buffer_buffer(chunks, zparams, threads):
     zctx = zstd.ZstdCompressor(compression_params=zparams)
@@ -132,7 +129,6 @@ def compress_multi_compress_to_buffer_buffer(chunks, zparams, threads):
     "discrete",
     "multi_compress_to_buffer() w/ list input",
     threads_arg=True,
-    cffi=False,
 )
 def compress_multi_compress_to_buffer_list(chunks, zparams, threads):
     zctx = zstd.ZstdCompressor(compression_params=zparams)
@@ -380,7 +376,6 @@ def decompress_zlib_decompress(chunks):
     threads_arg=True,
     decompressed_sizes_arg=True,
     chunks_as_buffer=True,
-    cffi=False,
 )
 def decompress_multi_decompress_to_buffer_buffer_and_size(
     chunks, opts, threads, decompressed_sizes
@@ -397,7 +392,6 @@ def decompress_multi_decompress_to_buffer_buffer_and_size(
     require_content_size=True,
     threads_arg=True,
     chunks_as_buffer=True,
-    cffi=False,
 )
 def decompress_multi_decompress_to_buffer_buffer(chunks, opts, threads):
     zctx = zstd.ZstdDecompressor(**opts)
@@ -409,7 +403,6 @@ def decompress_multi_decompress_to_buffer_buffer(chunks, opts, threads):
     "multi_decompress_to_buffer() w/ list of bytes input + sizes",
     threads_arg=True,
     decompressed_sizes_arg=True,
-    cffi=False,
 )
 def decompress_multi_decompress_to_buffer_list_and_sizes(
     chunks, opts, threads, decompressed_sizes
@@ -425,7 +418,6 @@ def decompress_multi_decompress_to_buffer_list_and_sizes(
     "multi_decompress_to_buffer() w/ list of bytes input",
     require_content_size=True,
     threads_arg=True,
-    cffi=False,
 )
 def decompress_multi_decompress_to_buffer_list(chunks, opts, threads):
     zctx = zstd.ZstdDecompressor(**opts)
@@ -604,9 +596,6 @@ def get_benches(mode, direction, zlib=False):
             continue
 
         if fn.zlib != zlib:
-            continue
-
-        if zstd.backend == "cffi" and not fn.cffi:
             continue
 
         fns.append(fn)

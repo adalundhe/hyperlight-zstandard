@@ -1,5 +1,5 @@
 """
-Tests for Python 3.14+ subinterpreter compatibility.
+Tests for Python 3.13+ subinterpreter compatibility.
 
 This module verifies that zstandard can be imported and used correctly
 across multiple Python subinterpreters, which is required for proper
@@ -9,13 +9,13 @@ free-threading and concurrent subinterpreter support in Python 3.14+.
 import sys
 import unittest
 
-# Python 3.12+ is required for interpreters module
-if sys.version_info >= (3, 12):
+# Python 3.13+ is required for the public concurrent.interpreters module
+if sys.version_info >= (3, 13):
     from concurrent import interpreters  # type: ignore[attr-defined]
 
 
 @unittest.skipIf(
-    sys.version_info < (3, 12), "Subinterpreters require Python 3.12+"
+    sys.version_info < (3, 13), "Subinterpreters require Python 3.13+"
 )
 class TestSubinterpreters(unittest.TestCase):
     """Test zstandard in subinterpreter contexts."""

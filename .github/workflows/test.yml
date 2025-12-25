@@ -43,8 +43,7 @@ jobs:
     env:
       # Enable fuzzing tests, other expensive tests.
       ZSTD_SLOW_TESTS: '1'
-      # Make all compile warnings fatal except on 3.13, which has some deprecations
-      # at the moment.
+      # Make all compile warnings fatal.
       ZSTD_WARNINGS_AS_ERRORS: '1'
       # More thorough fuzzing coverage.
       HYPOTHESIS_PROFILE: 'ci'
@@ -75,13 +74,6 @@ jobs:
       - name: Test C Backend
         run: |
           uv -v run --locked pytest --numprocesses=auto --hypothesis-profile=${HYPOTHESIS_PROFILE} -v
-
-      - name: Test CFFI Backend
-        if: matrix.py != '3.13t'
-        env:
-          HYPERLIGHT_ZSTANDARD_IMPORT_POLICY: 'cffi'
-        run: |
-          uv -v run --locked -w cffi pytest --numprocesses=auto --hypothesis-profile=${HYPOTHESIS_PROFILE} -v
 
       - name: Test Rust Backend
         # Rust backend is currently experimental. So ignore failures in it.

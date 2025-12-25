@@ -15,16 +15,11 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Free Threading :: 1 - Unstable",
 ]
 keywords = ["zstandard", "zstd", "compression"]
 dependencies = []
-
-[project.optional-dependencies]
-cffi = [
-    "cffi~=1.17; platform_python_implementation != 'PyPy' and python_version < '3.14'",
-    "cffi>=2.0.0b; platform_python_implementation != 'PyPy' and python_version >= '3.14'",
-]
 
 [project.urls]
 Homepage = "https://github.com/adalundhe/hyperlight-zstandard"
@@ -32,8 +27,6 @@ Documentation = "https://hyperlight-zstandard.readthedocs.io/en/latest/"
 
 [build-system]
 requires = [
-    "cffi~=1.17; platform_python_implementation != 'PyPy' and python_version < '3.14'",
-    "cffi>=2.0.0b; platform_python_implementation != 'PyPy' and python_version >= '3.14'",
     "packaging",
     "setuptools>=77.0.0",
 ]
@@ -41,8 +34,6 @@ build-backend = "setuptools.build_meta"
 
 [dependency-groups]
 dev = [
-    "cffi~=1.17; platform_python_implementation != 'PyPy' and python_version < '3.14'",
-    "cffi>=2.0.0b; platform_python_implementation != 'PyPy' and python_version >= '3.14'",
     "hypothesis==6.111.0",
     "mypy>=1.17.1",
     "pytest>=8.4.1",
@@ -65,20 +56,6 @@ build-frontend = "build[uv]"
 # Turn compiler warnings into errors.
 environment = "ZSTD_WARNINGS_AS_ERRORS=1"
 
-test-command = [
-    "pytest -v --numprocesses=auto",
-    "HYPERLIGHT_ZSTANDARD_IMPORT_POLICY=cffi pytest -v --numprocesses=auto",
-]
+test-command = "pytest -v --numprocesses=auto"
 test-groups = ["dev"]
 test-sources = ["tests"]
-
-[tool.cibuildwheel.linux]
-before-all = "if [ -x /usr/bin/yum ]; then yum install -y libffi-devel; fi"
-
-[tool.cibuildwheel.windows]
-# Environment variable syntax is different on Windows.
-test-command = [
-    "pytest -v --numprocesses=auto",
-    "set HYPERLIGHT_ZSTANDARD_IMPORT_POLICY=cffi",
-    "pytest -v --numprocesses=auto",
-]
