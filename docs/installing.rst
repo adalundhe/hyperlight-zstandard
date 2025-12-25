@@ -22,10 +22,9 @@ this package with ``conda``.
 Requirements
 ============
 
-This package is designed to run with Python 3.9, 3.10, 3.11, and 3.12
-on common platforms (Linux, Windows, and OS X). On PyPy (both PyPy2 and PyPy3)
-we support version 6.0.0 and above. x86 and x86_64 are well-tested on Windows.
-Only x86_64 is well-tested on Linux and macOS.
+This package is designed to run with Python 3.12, 3.13, and 3.14
+on common platforms (Linux, Windows, and macOS). On PyPy we support
+version 3.10 and above. x86_64 and arm64 are well-tested on all platforms.
 
 CFFI Backend
 ============
@@ -110,7 +109,7 @@ It is possible to point ``setup.py`` at an external (typically system provided)
 When building against a system libzstd, you may need to specify extra compiler
 arguments to help Python's build system find the external library. These can
 be specified via the ``ZSTD_EXTRA_COMPILER_ARGS`` environment variable. e.g.
-``ZSTD_EXTRA_COMPILER_ARGS="-I/usr/local/include" python3.9 setup.py
+``ZSTD_EXTRA_COMPILER_ARGS="-I/usr/local/include" python3 setup.py
 --system-zstd``.
 
 ``hyperlight-zstandard`` can be sensitive about what version of ``libzstd`` it links

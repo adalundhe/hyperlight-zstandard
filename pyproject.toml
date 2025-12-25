@@ -12,9 +12,6 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Programming Language :: C",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
@@ -82,6 +79,6 @@ before-all = "if [ -x /usr/bin/yum ]; then yum install -y libffi-devel; fi"
 # Environment variable syntax is different on Windows.
 test-command = [
     "pytest -v --numprocesses=auto",
-    "set PYTHON_ZSTANDARD_IMPORT_POLICY=cffi",
+    "set HYPERLIGHT_ZSTANDARD_IMPORT_POLICY=cffi",
     "pytest -v --numprocesses=auto",
 ]
