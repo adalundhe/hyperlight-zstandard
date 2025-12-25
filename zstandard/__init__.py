@@ -115,11 +115,11 @@ def open(
     normalized_mode = mode.replace("t", "")
 
     if normalized_mode in ("r", "rb"):
-        dctx = dctx or ZstdDecompressor()
+        dctx = dctx or ZstdDecompressor()  # type: ignore[name-defined]
         open_mode = "r"
         raw_open_mode = "rb"
     elif normalized_mode in ("w", "wb", "a", "ab", "x", "xb"):
-        cctx = cctx or ZstdCompressor()
+        cctx = cctx or ZstdCompressor()  # type: ignore[name-defined]
         open_mode = "w"
         raw_open_mode = normalized_mode
         if not raw_open_mode.endswith("b"):
@@ -171,7 +171,7 @@ def compress(data: Buffer, level: int = 3) -> bytes:
     performance will be greater if you construct a single ``ZstdCompressor``
     and repeatedly call ``compress()`` on it.
     """
-    cctx = ZstdCompressor(level=level)
+    cctx = ZstdCompressor(level=level)  # type: ignore[name-defined]
 
     return cctx.compress(data)
 
@@ -189,6 +189,6 @@ def decompress(data: Buffer, max_output_size: int = 0) -> bytes:
     will be greater if you construct a single ``ZstdDecompressor`` and
     repeatedly call ``decompress()`` on it.
     """
-    dctx = ZstdDecompressor()
+    dctx = ZstdDecompressor()  # type: ignore[name-defined]
 
     return dctx.decompress(data, max_output_size=max_output_size)
