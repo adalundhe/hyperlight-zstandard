@@ -22,21 +22,41 @@ if sys.version_info >= (3, 12):
 else:
     from typing import ByteString as Buffer
 
-# Import the C backend. The behavior can be overridden via environment variable
-# for special cases (e.g., testing the Rust backend).
+# Import the backend. The behavior can be overridden via environment variable.
+# By default, we try the C backend first, then fall back to Rust if unavailable.
 _module_policy = os.environ.get(
     "HYPERLIGHT_ZSTANDARD_IMPORT_POLICY",
     os.environ.get("PYTHON_ZSTANDARD_IMPORT_POLICY", "default"),
 ).strip()
 
-if _module_policy in ("default", "cext"):
-    from .backend_c import *  # type: ignore
+backend = None
 
-    backend = "cext"
-elif _module_policy == "rust":
+if _module_policy == "rust":
+    # Explicitly request Rust backend
     from .backend_rust import *  # type: ignore
 
     backend = "rust"
+elif _module_policy == "cext":
+    # Explicitly request C backend (no fallback)
+    from .backend_c import *  # type: ignore
+
+    backend = "cext"
+elif _module_policy == "default":
+    # Default: try C backend first, fall back to Rust if unavailable
+    try:
+        from .backend_c import *  # type: ignore
+
+        backend = "cext"
+    except ImportError:
+        # C backend not available, try Rust as fallback
+        try:
+            from .backend_rust import *  # type: ignore
+
+            backend = "rust"
+        except ImportError:
+            raise ImportError(
+                "No zstandard backend available. Install the C extension or Rust backend."
+            )
 else:
     raise ImportError(
         "unknown module import policy: %s; use default, cext, or rust"

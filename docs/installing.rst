@@ -23,25 +23,27 @@ Requirements
 ============
 
 This package is designed to run with Python 3.12, 3.13, and 3.14
-on common platforms (Linux, Windows, and macOS). On PyPy we support
-version 3.10 and above. x86_64 and arm64 are well-tested on all platforms.
+on common platforms (Linux, Windows, and macOS). x86_64 and arm64
+are well-tested on all platforms.
 
-CFFI Backend
-============
+Backends
+========
 
-In order to build/run the CFFI backend/bindings (as opposed to the C/Rust
-backend/bindings), you will need the ``cffi`` package installed. The
-``cffi`` package is listed as an optional dependency in ``setup.py`` and
-may not get picked up by your packaging tools.
+This package provides two backends:
 
-If you wish to use the CFFI backend (or have to use it since your Python
-distribution doesn't support compiled extensions using the Python C API -
-this is the case for PyPy for example), be sure you have the ``cffi``
-package installed.
+**C Backend (Primary)**
+   The default backend, implemented as a C extension using the Python C API.
+   This backend supports Python subinterpreters (Python 3.12+) and free-threaded
+   Python (Python 3.13+).
 
-One way to do this is to depend on the ``zstandard[cffi]`` dependency.
-e.g. ``pip install 'zstandard[cffi]'`` or add ``zstandard[cffi]`` to your
-pip requirements file.
+**Rust Backend (Fallback)**
+   An alternative backend implemented in Rust using PyO3. The Rust backend
+   is automatically used as a fallback when the C backend is unavailable
+   (e.g., when building from source on a system without a C compiler but
+   with Rust tooling). The Rust backend also supports subinterpreters
+   via multi-phase initialization (PEP 489).
+
+   To build the Rust backend from source, you need Rust and Cargo installed.
 
 Legacy Format Support
 =====================
@@ -70,20 +72,14 @@ All Install Arguments
 ``--no-c-backend``
    Do not compile the C-based backend.
 
-``--no-cffi-backend``
-   Do not compile the CFFI-based backend.
-
 ``--rust-backend``
-   Compile the Rust backend (not yet feature complete).
+   Compile the Rust backend. The Rust backend supports subinterpreters
+   via multi-phase initialization (PEP 489).
 
 Packaging tools newer than ~2023 likely require using a PEP 517
 build backend instead of invoking ``setup.py`` directly. In order to send
 custom arguments to our ``setup.py``, you need to use ``--config-settings``.
-e.g. ``python3 -m pip install zstandard --config-settings='--global-option=--no-cffi-backend'``.
-
-Older packaging tools allowed you to use e.g.
-``python3 -m pip install zstandard --install-option --no-cffi-backend`` or
-just ``python3 setup.py --no-cffi-backend`` directly.
+e.g. ``python3 -m pip install zstandard --config-settings='--global-option=--rust-backend'``.
 
 In addition, the following environment variables are recognized:
 

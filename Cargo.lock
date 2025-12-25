@@ -147,6 +147,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fc0fef456e4baa96da950455cd02c081ca953b141298e41db3fc7e36b1da849c"
 
 [[package]]
+name = "hyperlight-zstandard"
+version = "0.25.0"
+dependencies = [
+ "libc",
+ "num_cpus",
+ "pyo3",
+ "pyo3-ffi",
+ "rayon",
+ "zstd-safe",
+ "zstd-sys",
+]
+
+[[package]]
 name = "indoc"
 version = "2.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -315,18 +328,6 @@ dependencies = [
  "pyo3-build-config",
  "quote",
  "syn",
-]
-
-[[package]]
-name = "hyperlight-zstandard"
-version = "0.25.0"
-dependencies = [
- "libc",
- "num_cpus",
- "pyo3",
- "rayon",
- "zstd-safe",
- "zstd-sys",
 ]
 
 [[package]]

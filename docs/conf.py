@@ -4,9 +4,8 @@ import re
 HERE = os.path.dirname(__file__)
 ROOT = os.path.dirname(HERE)
 
-# docstrings are defined in the cffi backend for simplicity.
-# So point autodoc at that backend via the environment variable.
-os.environ["HYPERLIGHT_ZSTANDARD_IMPORT_POLICY"] = "cffi"
+# Use the default backend (C extension) for autodoc.
+os.environ["HYPERLIGHT_ZSTANDARD_IMPORT_POLICY"] = "default"
 
 release = "unknown"
 

@@ -17,31 +17,29 @@ brevity:
 
    import zstandard as zstd
 
-This module attempts to import and use either the C extension or CFFI
-implementation. On Python platforms known to support C extensions (like
-CPython), it raises an ImportError if the C extension cannot be imported.
-On Python platforms known to not support C extensions (like PyPy), it only
-attempts to import the CFFI implementation and raises ImportError if that
-can't be done. On other platforms, it first tries to import the C extension
-then falls back to CFFI if that fails and raises ImportError if CFFI fails.
+This module attempts to import and use the C extension. If the C extension
+is not available, it falls back to the Rust backend. If neither backend is
+available, it raises an ``ImportError``.
+
+Both the C and Rust backends support Python subinterpreters (Python 3.12+)
+via multi-phase module initialization (PEP 489) and declare ``GIL_NOT_USED``
+for compatibility with free-threaded Python (Python 3.13+).
 
 To change the module import behavior, a ``HYPERLIGHT_ZSTANDARD_IMPORT_POLICY``
 environment variable can be set (or ``PYTHON_ZSTANDARD_IMPORT_POLICY`` for
 backwards compatibility). The following values are accepted:
 
 ``default``
-   The behavior described above.
-``cffi_fallback``
-   Always try to import the C extension then fall back to CFFI if that
-   fails.
+   First try to import the C extension, then fall back to the Rust backend
+   if the C extension is not available.
 ``cext``
-   Only attempt to import the C extension.
-``cffi``
-   Only attempt to import the CFFI implementation.
+   Only attempt to import the C extension. Raises ``ImportError`` if unavailable.
+``rust``
+   Only attempt to import the Rust backend. Raises ``ImportError`` if unavailable.
 
 In addition, the ``zstandard`` module exports a ``backend`` attribute
 containing the string name of the backend being used. It will be one
-of ``cext`` or ``cffi`` (for *C extension* and *cffi*, respectively).
+of ``cext`` or ``rust``.
 
 .. note::
 
