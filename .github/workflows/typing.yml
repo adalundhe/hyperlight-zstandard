@@ -27,4 +27,4 @@ jobs:
 
       - name: Run mypy
         run: |
-          uv run --locked mypy tests/*.py zstandard/*.py
+          uv run --locked mypy zstandard/ tests/

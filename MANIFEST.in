@@ -2,6 +2,7 @@ graft c-ext
 graft debian
 graft rust-ext
 graft zstd
+graft zstandard
 graft tests
 include setup_zstd.py
 include Cargo.lock

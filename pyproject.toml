@@ -32,6 +32,9 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools.package-data]
+zstandard = ["__init__.pyi", "py.typed"]
+
 [dependency-groups]
 dev = [
     "hypothesis==6.111.0",
@@ -42,6 +45,12 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.mypy]
+# The C and Rust backend modules are compiled extensions without stubs
+[[tool.mypy.overrides]]
+module = ["zstandard.backend_c", "zstandard.backend_rust"]
+ignore_missing_imports = true
 
 [tool.ruff]
 line-length = 80
