@@ -9,10 +9,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Note: Python 3.14 excluded until conda-build supports it
         py:
           - '3.12'
           - '3.13'
-          - '3.14'
     runs-on: 'ubuntu-22.04'
     env:
       # Enable fuzzing tests, other expensive tests.
@@ -57,10 +57,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Note: Python 3.14 excluded until conda-build supports it
         py:
           - '3.12'
           - '3.13'
-          - '3.14'
     runs-on: 'windows-2022'
     env:
       # Enable fuzzing tests, other expensive tests.
